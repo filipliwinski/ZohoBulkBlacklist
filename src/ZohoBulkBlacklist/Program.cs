@@ -19,7 +19,7 @@ namespace ZohoBulkBlacklist
                 Console.ReadKey();
             }
 
-            // Add existing SPAM domains
+            // Add existing SPAM domains.
             var existingDomains = File.ReadAllLines(args[0]);
             var existingDomainsSet = new HashSet<string>(existingDomains.Length);
 
@@ -33,7 +33,7 @@ namespace ZohoBulkBlacklist
 
             var newDomains = new HashSet<string>();
 
-            // Verify domains form other tenants
+            // Verify domains from other tenants.
             if (args.Length == 3)
             {
                 var existingDomainsTenants = File.ReadAllLines(args[2]);
@@ -50,14 +50,14 @@ namespace ZohoBulkBlacklist
             {
                 Console.WriteLine("No other tenants provided.");
             }
-
-            // Verify new SPAM addresses
+            
+            // Verify new SPAM addresses.
             var addresses = File.ReadAllLines(args[1]);
 
             for (int i = 0; i < addresses.Length; i++)
             {
                 if (addresses[i].Contains("@") && 
-                    !addresses[i].Contains("@" + args[1][0..^4]))
+                    !addresses[i].Contains("@" + args[1][0..^4]))   // Do not include tenant domain.
                 {
                     var domain = addresses[i].Trim().Split('@')[1];
                     if (!existingDomainsSet.Contains(domain) && newDomains.Add(domain))
@@ -67,7 +67,7 @@ namespace ZohoBulkBlacklist
                 }
             }
 
-            // Save new SPAM domains
+            // Save new SPAM domains.
             var output = new StringBuilder();
             if (newDomains.Count == 0)
             {
