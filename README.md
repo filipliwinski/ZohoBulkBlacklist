@@ -8,4 +8,5 @@ Read more: [Organization Spam Control](https://www.zoho.com/mail/help/adminconso
 
 [0]: path to the file containing the list of currently blocked domains (each domain in separate line)\
 [1]: path to the file containing the list from Zoho Mail quarantine (file name: example.com.txt)\
-[2]: path to the file containing the list of currently blocked domains from other tenants (optional)
+[2]: path to the file containing the list of currently blocked domains from other tenants (optional)\
+[3]: number of new domains per row in the output (optional, default is 10, min. 10, max. 255)

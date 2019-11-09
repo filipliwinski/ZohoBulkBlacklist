@@ -10,12 +10,13 @@ namespace ZohoBulkBlacklist
         static void Main(string[] args)
         {
             Console.WriteLine("Helo to Zoho Bulk Blacklist tool!");
-            if (args.Length < 2 || args.Length > 3)
+            if (args.Length < 2 || args.Length > 4)
             {
                 Console.WriteLine(@"Provide parameters:
 [0]: path to the file containing the list of currently blocked domains (each domain in separate line)
-[1]: path to the file containing the list from Zoho Mail quarantine (file name: example.com.txt)
-[2]: path to the file containing the list of currently blocked domains from other tenants (optional).");
+[1]: path to the file containing the list of Zoho Mail quarantine (file name: example.com.txt)
+[2]: path to the file containing the list of currently blocked domains from other tenants (optional)
+[3]: number of new domains per row in the output (optional, default is 10, min. 10, max. 255)");
                 Console.ReadKey();
             }
 
@@ -78,10 +79,12 @@ namespace ZohoBulkBlacklist
             {
                 var j = 0;
                 var k = 0;
+                var domainsPerRowInput = Convert.ToByte(args[3]) > 10 ? Convert.ToByte(args[3]) - 1 : 9;
+                var domainsPerRow = args.Length == 4 ? domainsPerRowInput : 9;
                 output.Append($"[{k}] ");
                 foreach (var item in newDomains)
                 {
-                    if (j++ != 9)
+                    if (j++ != domainsPerRow)
                     {
                         output.Append(item).Append(',');
                     }
