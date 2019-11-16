@@ -35,7 +35,7 @@ namespace ZohoBulkBlacklist
             var newDomains = new HashSet<string>();
 
             // Verify domains from other tenants.
-            if (args.Length == 3)
+            if (args.Length > 2)
             {
                 var existingDomainsTenants = File.ReadAllLines(args[2]);
                 for (int i = 0; i < existingDomainsTenants.Length; i++)
@@ -79,7 +79,11 @@ namespace ZohoBulkBlacklist
             {
                 var j = 0;
                 var k = 0;
-                var domainsPerRowInput = Convert.ToByte(args[3]) > 10 ? Convert.ToByte(args[3]) - 1 : 9;
+                var domainsPerRowInput = 9;
+                if (args.Length == 4)
+                {
+                    domainsPerRowInput = Convert.ToByte(args[3]) > 10 ? Convert.ToByte(args[3]) - 1 : 9;
+                }
                 var domainsPerRow = args.Length == 4 ? domainsPerRowInput : 9;
                 output.Append($"[{k}] ");
                 foreach (var item in newDomains)
