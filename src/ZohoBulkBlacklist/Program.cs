@@ -20,13 +20,25 @@ namespace ZohoBulkBlacklist
                 Console.ReadKey();
             }
 
+            // Whitelist of domains.
+            var whitelistDomains = new string[]
+            {
+                "gmail.com",
+                "outlook.com",
+                "yahoo.com"
+            };
+
             // Add existing SPAM domains.
             var existingDomains = File.ReadAllLines(args[0]);
-            var existingDomainsSet = new HashSet<string>(existingDomains.Length);
+            var existingDomainsSet = new HashSet<string>(existingDomains.Length + whitelistDomains.Length);
 
             for (int i = 0; i < existingDomains.Length; i++)
             {
                 existingDomainsSet.Add(existingDomains[i].Trim());
+            }
+            for (int i = 0; i < whitelistDomains.Length; i++)
+            {
+                existingDomainsSet.Add(whitelistDomains[i].Trim());
             }
 
             File.WriteAllLines(args[0], existingDomainsSet);
